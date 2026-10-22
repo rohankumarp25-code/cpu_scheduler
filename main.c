@@ -4,6 +4,12 @@
 
 #define MAX_PROCESSES 100
 #define MAX_RESOURCES 10
+enum ProcessState {
+    NEW,
+    READY,
+    RUNNING,
+    TERMINATED
+};
 
 typedef struct {
     int processID;
@@ -18,7 +24,7 @@ typedef struct {
     int waitingTime;
     int responseTime;
 
-    int state;
+    enum ProcessState state;
 } Process;
 
 typedef struct ProcessNode {
@@ -55,8 +61,41 @@ typedef struct {
     int maximum[MAX_PROCESSES][MAX_RESOURCES];
     int need[MAX_PROCESSES][MAX_RESOURCES];
 } ResourceState;
+void initializeProcessList(ProcessList *list)
+{
+    list->head = NULL;
+    list->size = 0;
+}
+Process createProcess(int processID, int arrivalTime,
+                      int burstTime, int priority)
+{
+    Process p;
 
-int main(void) {
-    printf("CPU Process and Resource Management Simulator\n");
+    p.processID = processID;
+    p.arrivalTime = arrivalTime;
+    p.burstTime = burstTime;
+    p.priority = priority;
+
+    p.remainingTime = burstTime;
+    p.firstStartTime = -1;
+    p.completionTime = -1;
+    p.turnaroundTime = 0;
+    p.waitingTime = 0;
+    p.responseTime = -1;
+
+    p.state = NEW;
+
+    return p;
+}
+
+int main(void)
+{
+    ProcessList processList;
+
+    initializeProcessList(&processList);
+
+    printf("Head: %p\n", (void *)processList.head);
+    printf("Size: %d\n", processList.size);
+
     return 0;
 }
