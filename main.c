@@ -87,6 +87,31 @@ Process createProcess(int processID, int arrivalTime,
 
     return p;
 }
+void addProcess(ProcessList *list, Process p){
+    ProcessNode *newNode = malloc(sizeof(ProcessNode));
+    if(newNode){
+        newNode->data=p;
+        newNode->next=NULL;
+    }
+    else 
+    return;
+    if(list->head==NULL){
+       list->head=newNode;
+    }
+    else{
+        ProcessNode *temp=list->head;
+        while(temp->next)
+            temp=temp->next;
+            temp->next=newNode;
+        
+    }
+    (list->size)++;
+
+}
+void displayProcesses(ProcessList *list){
+    if(!(list->head))
+        printf("The process list empty is empty");
+}
 
 int main(void)
 {
