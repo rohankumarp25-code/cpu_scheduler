@@ -147,6 +147,32 @@ ProcessNode *findProcessByID(ProcessList *list, int processID){
     }
     return NULL;
 }
+int removeProcess(ProcessList *list, int processID){
+    if(!(list->head)){
+        printf("process List is empty");
+        return 0;
+    }
+      ProcessNode *temp=list->head;
+     if((temp->data).processID==processID){
+        ProcessNode *delete=temp;
+        list->head=temp->next;
+        free(delete);
+        list->size--;
+        return 1; 
+     }
+    while(temp&&temp->next){
+     if((temp->next->data).processID==processID){
+         ProcessNode *remb=temp->next->next;
+         ProcessNode *delete=temp->next;
+         temp->next=remb;
+         free(delete);
+         list->size--;
+         return 1;
+     }
+     temp=temp->next;
+    }
+    return 0;
+}
 
 int main(void)
 {
