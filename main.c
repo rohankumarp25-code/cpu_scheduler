@@ -134,6 +134,19 @@ void displayProcesses(ProcessList *list){
          }
 
 }
+ProcessNode *findProcessByID(ProcessList *list, int processID){
+    if(!(list->head)){
+        printf("process List is empty");
+        return NULL;
+    }
+    ProcessNode *temp=list->head;
+    while(temp){
+        if((temp->data).processID==processID)
+        return temp;
+        temp=temp->next;
+    }
+    return NULL;
+}
 
 int main(void)
 {
