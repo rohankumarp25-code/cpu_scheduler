@@ -109,8 +109,30 @@ void addProcess(ProcessList *list, Process p){
 
 }
 void displayProcesses(ProcessList *list){
-    if(!(list->head))
+    if(!(list->head)){
         printf("The process list empty is empty");
+        return;
+    }
+         ProcessNode *temp=list->head;
+         int i=1;
+         while(temp){
+            printf("Displaying Data of Process %d\n",i);
+        printf("Process ID: %d\n", temp->data.processID);
+        printf("Arrival Time: %d\n", temp->data.arrivalTime);
+        printf("Burst Time: %d\n", temp->data.burstTime);
+        printf("Priority: %d\n", temp->data.priority);
+        printf("Remaining Time: %d\n", temp->data.remainingTime);
+        printf("First Start Time: %d\n", temp->data.firstStartTime);
+        printf("Completion Time: %d\n", temp->data.completionTime);
+        printf("Turnaround Time: %d\n", temp->data.turnaroundTime);
+        printf("Waiting Time: %d\n", temp->data.waitingTime);
+        printf("Response Time: %d\n", temp->data.responseTime);
+        printf("State: %d\n", temp->data.state);
+        printf("-------------------------\n");
+                   i++;
+                   temp=temp->next;
+         }
+
 }
 
 int main(void)
