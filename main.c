@@ -173,6 +173,29 @@ int removeProcess(ProcessList *list, int processID){
     }
     return 0;
 }
+int updateProcess(ProcessList *list, int processID,
+                  int arrivalTime, int burstTime, int priority){
+                    ProcessNode *remb= findProcessByID(list,processID);
+                    if(remb==NULL){
+                        printf("Process doesnt exist");
+                        return 0;
+                    }
+                    else if(remb->data.state==NEW){
+                        remb->data.arrivalTime=arrivalTime;
+                        remb->data.burstTime=burstTime;
+                        remb->data.priority=priority;
+                        remb->data.remainingTime=burstTime;
+                        remb->data.firstStartTime=-1;
+                        remb->data.completionTime=-1;
+                        remb->data.turnaroundTime=0;
+                        remb->data.waitingTime=0;
+                        remb->data.responseTime=-1;
+                        remb->data.state=NEW;
+                        return 1;
+                    }
+                    printf("Cannot update a process that has already started scheduling");
+                    return 0;
+                  }
 
 int main(void)
 {
