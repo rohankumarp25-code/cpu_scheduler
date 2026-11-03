@@ -196,6 +196,22 @@ int updateProcess(ProcessList *list, int processID,
                     printf("Cannot update a process that has already started scheduling");
                     return 0;
                   }
+     void freeProcessList(ProcessList *list){
+         ProcessNode *temp=list->head;
+         ProcessNode *remb;
+         if(!temp){
+            printf("process list is empty");
+            return;
+         }
+         while(temp){
+            remb=temp->next;
+            free(temp);
+            temp=remb;
+        }
+        printf("Now The processlist is empty");
+        list->size=0;
+         list->head=NULL;
+     }
 
 int main(void)
 {
