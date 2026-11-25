@@ -10,7 +10,6 @@ typedef struct {
     int startTime;
     int endTime;
 } GanttEntry;
-
 typedef struct {
     GanttEntry entries[MAX_GANTT_ENTRIES];
     int count;
