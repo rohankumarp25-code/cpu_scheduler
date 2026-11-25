@@ -152,3 +152,6 @@ int updateProcess(ProcessList *list, int processID,
         list->size=0;
          list->head=NULL;
      }
+     int main(){
+        return 0;
+     }
