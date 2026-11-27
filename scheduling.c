@@ -1,6 +1,31 @@
 #include "scheduling.h"
+#include "string.h"
 void scheduleFCFS(Process processes[], int count, GanttChart *chart){
     
+}
+void calculateAverages(Process processes[], int count,
+                       double *avgWaitingTime,
+                       double *avgTurnaroundTime,
+                       double *avgResponseTime){
+    if (count <= 0) {
+        *avgWaitingTime = 0;
+        *avgTurnaroundTime = 0;
+        *avgResponseTime = 0;
+        return;
+    }
+
+    *avgWaitingTime = 0;
+    *avgTurnaroundTime = 0;
+    *avgResponseTime = 0;
+    for (int i = 0; i < count; i++) {
+        *avgWaitingTime += processes[i].waitingTime;
+        *avgTurnaroundTime += processes[i].turnaroundTime;
+        *avgResponseTime += processes[i].responseTime;
+    }
+
+    *avgWaitingTime /= count;
+    *avgTurnaroundTime /= count;
+    *avgResponseTime /= count;
 }
 void displayGanttChart(GanttChart *chart)
 {
@@ -88,5 +113,6 @@ void displayGanttChart(GanttChart *chart)
     printf("\n\n");
 }
 int main(){
+
 return 0;
 }
