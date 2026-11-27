@@ -3,6 +3,20 @@
 void scheduleFCFS(Process processes[], int count, GanttChart *chart){
     
 }
+void calculateMetrics(Process processes[], int count){
+    if(count<=0){
+        printf("process list is empty");
+        return;
+    }
+    int i=0;
+    while(i<count){
+        processes[i].turnaroundTime=processes[i].completionTime-processes[i].arrivalTime;
+        processes[i].waitingTime=processes[i].turnaroundTime-processes[i].burstTime;
+          processes[i].responseTime=processes[i].firstStartTime-processes[i].arrivalTime;
+        i++;
+    }
+   
+}
 void calculateAverages(Process processes[], int count,
                        double *avgWaitingTime,
                        double *avgTurnaroundTime,
