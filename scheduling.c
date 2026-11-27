@@ -3,6 +3,19 @@
 void scheduleFCFS(Process processes[], int count, GanttChart *chart){
     
 }
+void resetSchedulingData(Process processes[], int count)
+{
+    for (int i = 0; i < count; i++)
+    {
+        processes[i].remainingTime = processes[i].burstTime;
+        processes[i].firstStartTime = -1;
+        processes[i].completionTime = -1;
+        processes[i].turnaroundTime = 0;
+        processes[i].waitingTime = 0;
+        processes[i].responseTime = -1;
+        processes[i].state = NEW;
+    }
+}
 void calculateMetrics(Process processes[], int count){
     if(count<=0){
         printf("process list is empty");
