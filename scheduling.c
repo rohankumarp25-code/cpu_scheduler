@@ -1,7 +1,79 @@
 #include "scheduling.h"
 #include "string.h"
-void scheduleFCFS(Process processes[], int count, GanttChart *chart){
-    
+void scheduleFCFS(Process processes[], int count, GanttChart *chart)
+{
+    if (count <= 0)
+        return;
+
+    resetSchedulingData(processes, count);
+    chart->count = 0;
+
+    // Create an array of indices
+    int order[MAX_PROCESSES];
+
+    for (int i = 0; i < count; i++)
+        order[i] = i;
+
+    // Stable sorting by arrival time (Bubble Sort)
+    for (int i = 0; i < count - 1; i++)
+    {
+        for (int j = 0; j < count - i - 1; j++)
+        {
+            if (processes[order[j]].arrivalTime >
+                processes[order[j + 1]].arrivalTime)
+            {
+                int temp = order[j];
+                order[j] = order[j + 1];
+                order[j + 1] = temp;
+            }
+        }
+    }
+
+    int currentTime = 0;
+
+    // Schedule processes
+    for (int i = 0; i < count; i++)
+    {
+        int index = order[i];
+
+        // Handle CPU idle time
+        if (processes[index].arrivalTime > currentTime)
+        {
+            chart->entries[chart->count].processID = -1;
+            chart->entries[chart->count].startTime = currentTime;
+            chart->entries[chart->count].endTime =
+                processes[index].arrivalTime;
+
+            chart->count++;
+
+            currentTime = processes[index].arrivalTime;
+        }
+
+        // Record execution start
+        processes[index].firstStartTime = currentTime;
+
+        // Calculate completion time
+        currentTime += processes[index].burstTime;
+
+        processes[index].completionTime = currentTime;
+        processes[index].remainingTime = 0;
+        processes[index].state = TERMINATED;
+
+        // Add to Gantt chart
+        chart->entries[chart->count].processID =
+            processes[index].processID;
+
+        chart->entries[chart->count].startTime =
+            processes[index].firstStartTime;
+
+        chart->entries[chart->count].endTime =
+            processes[index].completionTime;
+
+        chart->count++;
+    }
+
+    // Calculate individual metrics
+    calculateMetrics(processes, count);
 }
 void resetSchedulingData(Process processes[], int count)
 {
